@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'welcome.dart'; // دڵنیابە ئەم فایلە هەیە و WelcomeScreen تێدایە
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -6,8 +7,22 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+class GradientBanner extends StatelessWidget {
+  const GradientBanner({super.key});
 
-/// پەیجی هەڵبژاردنی زمان (لەسەر وێنەکە دیزاین کراوە)
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/img/gradient_banner.png",
+      width: double.infinity, // ⬅️ پر دەکات بە پەنی شاشە
+      height: 132,
+      fit: BoxFit.cover,      // ⬅️ بە شێوەی cover بگوازێت
+    );
+  }
+}
+
+
+/// پەیجی هەڵبژاردنی زمان (هاوشێوەی وێنەی تۆ)
 class _HomePageState extends State<HomePage> {
   // en, ar, ku, tr
   String _selected = 'en';
@@ -16,26 +31,27 @@ class _HomePageState extends State<HomePage> {
     _Lang(
       code: 'en',
       label: 'English',
-      flagUrl: 'https://flagcdn.com/w80/gb.png', // یەکگرتوو پەیوەندی HTTPS
+      flagUrl: 'https://flagcdn.com/w80/gb.png', // 🇬🇧
       dir: TextDirection.ltr,
     ),
     _Lang(
       code: 'ar',
       label: 'Arabic',
-      flagUrl: 'https://flagcdn.com/w80/iq.png',
+      flagUrl: 'https://flagcdn.com/w80/iq.png', // 🇮🇶
       dir: TextDirection.rtl,
     ),
     _Lang(
       code: 'ku',
       label: 'Kurdish',
-      // PNG لە ویکی‌میدیا (نە SVG بۆ ئەوەی پاکێج پێویست نەبێت)
-      flagUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Kurdistan.svg/640px-Flag_of_Kurdistan.svg.png',
+      // PNG بە هۆکاری ئەوەی پاکێج پێویست نەبێت
+      flagUrl:
+          'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Kurdistan.svg/640px-Flag_of_Kurdistan.svg.png',
       dir: TextDirection.rtl,
     ),
     _Lang(
       code: 'tr',
       label: 'Turkish',
-      flagUrl: 'https://flagcdn.com/w80/tr.png',
+      flagUrl: 'https://flagcdn.com/w80/tr.png', // 🇹🇷
       dir: TextDirection.ltr,
     ),
   ];
@@ -45,7 +61,7 @@ class _HomePageState extends State<HomePage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (_) => DashboardScreen(langCode: lang.code, dir: lang.dir),
+        builder: (_) => WelcomeScreen(langCode: lang.code, dir: lang.dir),
       ),
     );
   }
@@ -58,14 +74,15 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Stack(
           children: [
-            const _TopWave(),
+            const GradientBanner(), // موجەی سەرەوە
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 50),
-                  Text('choose Your',style: TextStyle(
+                   const SizedBox(height: 50),
+                  // سەردێڕ
+                 Text('choose Your',style: TextStyle(
                             color: const Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.w400,
                             fontSize: 26,
@@ -91,6 +108,7 @@ class _HomePageState extends State<HomePage> {
                       )),
 
                   const Spacer(),
+
                   // دوکمەی Done
                   SizedBox(
                     width: double.infinity,
@@ -101,7 +119,8 @@ class _HomePageState extends State<HomePage> {
                         foregroundColor: Colors.white,
                         minimumSize: const Size.fromHeight(52),
                         shape: const StadiumBorder(),
-                        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                        textStyle: const TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w700),
                         elevation: 0,
                       ),
                       child: const Text('Done'),
@@ -117,13 +136,19 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// کاڕدەی دەرخستنی هەر هێڵێکی زمان
+// ــــــــــــــــــ Widgets & Helpers ــــــــــــــــــ
+
+// هێڵی هەر زمانێک
 class _LangTile extends StatelessWidget {
   final _Lang lang;
   final bool selected;
   final VoidCallback onTap;
 
-  const _LangTile({required this.lang, required this.selected, required this.onTap});
+  const _LangTile({
+    required this.lang,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -136,7 +161,7 @@ class _LangTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
-            // وێنەکە لە ئۆنلاینەوە
+            // وێنەی ئاڵا لە ئۆنلاینەوە
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: Image.network(
@@ -144,7 +169,6 @@ class _LangTile extends StatelessWidget {
                 width: 36,
                 height: 24,
                 fit: BoxFit.cover,
-                // Placeholder بەبێ پاکێج
                 loadingBuilder: (context, child, progress) {
                   if (progress == null) return child;
                   return Container(
@@ -156,7 +180,8 @@ class _LangTile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: const SizedBox(
-                      width: 12, height: 12,
+                      width: 12,
+                      height: 12,
                       child: CircularProgressIndicator(strokeWidth: 1.6),
                     ),
                   );
@@ -177,13 +202,15 @@ class _LangTile extends StatelessWidget {
             Expanded(
               child: Text(
                 lang.label,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                style: const TextStyle(
+                  fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 200),
               child: selected
-                  ? const Icon(Icons.check, key: ValueKey('y'), color: primary, size: 22)
+                  ? const Icon(Icons.check,
+                      key: ValueKey('y'), color: primary, size: 22)
                   : const SizedBox.shrink(key: ValueKey('n')),
             ),
           ],
@@ -207,7 +234,7 @@ class _Lang {
   });
 }
 
-/// موجەی سەرەوە
+/// موجەی سەرەوە (نارنجی)
 class _TopWave extends StatelessWidget {
   const _TopWave();
 
@@ -238,66 +265,4 @@ class _WavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-/// =================== DASHBOARD (٣ پەیج) ===================
-class DashboardScreen extends StatefulWidget {
-  final String langCode;
-  final TextDirection dir;
-  const DashboardScreen({super.key, required this.langCode, required this.dir});
-
-  @override
-  State<DashboardScreen> createState() => _DashboardScreenState();
-}
-
-class _DashboardScreenState extends State<DashboardScreen> {
-  int index = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    final pages = const [PageOne(), PageTwo(), PageThree()];
-    final labels = const ['Home', 'Settings', 'Profile'];
-
-    return Directionality(
-      textDirection: widget.dir,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('${labels[index]} (${widget.langCode.toUpperCase()})'),
-        ),
-        body: pages[index],
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: index,
-          selectedItemColor: const Color(0xFFFF5A36),
-          onTap: (i) => setState(() => index = i),
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
-            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// پەیجەکان
-class PageOne extends StatelessWidget {
-  const PageOne({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      const Center(child: Text('📄 Page 1', style: TextStyle(fontSize: 20)));
-}
-
-class PageTwo extends StatelessWidget {
-  const PageTwo({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      const Center(child: Text('⚙️ Page 2', style: TextStyle(fontSize: 20)));
-}
-
-class PageThree extends StatelessWidget {
-  const PageThree({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      const Center(child: Text('👤 Page 3', style: TextStyle(fontSize: 20)));
 }
