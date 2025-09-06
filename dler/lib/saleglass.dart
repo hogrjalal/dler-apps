@@ -1,5 +1,6 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_native_type_patch.dart';
+
 import 'package:dler/singleglass.dart';
+import 'doubleglass.dart';
 
 import 'package:flutter/material.dart';
 
@@ -35,7 +36,7 @@ class saleglassscreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Back button + Logo
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 90),
                   Row(
                     children: [
                       
@@ -58,7 +59,7 @@ class saleglassscreen extends StatelessWidget {
                         child: Center(
                           child: Image.asset(
                             "assets/img/logo.png",
-                            height: 46,
+                            height: 56,
                           ),
                         ),
                       ),
@@ -81,7 +82,7 @@ class saleglassscreen extends StatelessWidget {
                     imagePath: "assets/img/double.png",
                     label: "Double Pane",
                     onTap: () {
-                      
+                      Navigator.push( context, MaterialPageRoute(builder: (_) => const DoubleGlassScreen()), );
                     },
                   ),
                 ],

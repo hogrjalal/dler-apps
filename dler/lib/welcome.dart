@@ -37,6 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center, // ناوەڕاست
                   children: [
+                    const SizedBox(height: 36),
                     // ===== Back button (top-left) =====
                     Align(
                       alignment: Alignment.topLeft,
@@ -53,14 +54,23 @@ class WelcomeScreen extends StatelessWidget {
                           ],
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 22),
-                   onPressed: () {
-  Navigator.pop(context);
-},
+  icon: const Icon(
+    Icons.arrow_back,
+    color: Colors.white,
+    size: 32, // ⬅️ قەبارەی قووڵتر
+    shadows: [
+      Shadow(
+        color: Color.fromARGB(255, 255, 255, 255),
+        offset: Offset(1, 1),
+        blurRadius: 2,
+      ),
+    ],
+  ),
+  onPressed: () {
+    Navigator.pop(context);
+  },
+),
 
-                          tooltip: 'Back',
-                          
-                        ),
                       ),
                     ),
 
@@ -109,7 +119,7 @@ Navigator.push(context,
                           elevation: 0,
                         ),
                         child: const Text('Login',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
                       ),
                     ),
                     const SizedBox(height: 12),
@@ -128,7 +138,7 @@ Navigator.push(context,
                           side: const BorderSide(color: primary, width: 1.4),
                           minimumSize: const Size.fromHeight(44),
                           shape: const StadiumBorder(),
-                          textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                         child: const Text('Register'),
                       ),

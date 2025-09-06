@@ -8,6 +8,24 @@ class ForgotPasswordScreen extends StatefulWidget {
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
+class GradientBanner extends StatelessWidget {
+  const GradientBanner({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter, // ⬅️ بۆ خوارەوە
+      child: Image.asset(
+        "assets/img/vector.png",
+        width: double.infinity,
+        height: 200,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+}
+
+
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   static const primary = Color(0xFFFF5A36);
   int _selected = 0; // 0 = Email, 1 = Whatsapp
@@ -37,11 +55,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       body: Stack(
         children: [
           
-          // موجەی خوارەوە
-          const Align(
-            alignment: Alignment.bottomCenter,
-            child: SizedBox(height: 160, width: double.infinity, child: _BottomWave()),
-          ),
+          const GradientBanner(),
 
           SafeArea(
             child: Padding(
@@ -49,7 +63,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 38),
                   // سەطرێ سەرەوە: دوگمەی داخستن + لوگۆ
                   Row(
                     children: [
@@ -60,7 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           shape: BoxShape.circle,
                         ),
                         child: IconButton(
-                          icon: const Icon(Icons.close, color: Colors.white, size: 20),
+                          icon: const Icon(Icons.close, color: Colors.white, size: 27),
                           onPressed: () => Navigator.pop(context),
                           tooltip: 'Close',
                         ),
@@ -68,7 +82,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       const Spacer(),
                       Image.asset(
                         'assets/img/logo.png',
-                        height: 36,
+                        height: 56,
+                        width: 155,
                         fit: BoxFit.contain,
                         errorBuilder: (_, __, ___) => const SizedBox(height: 36),
                       ),
@@ -77,13 +92,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ],
                   ),
 
-                  const SizedBox(height: 18),
+                  const SizedBox(height: 88),
 
                   const Text(
                     'Select a method to reset\nyour password',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 22,
+                      fontSize: 28,
                       height: 1.25,
                       fontWeight: FontWeight.w800,
                       color: Colors.black,
@@ -103,7 +118,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     ),
                     child:  Image.asset(
                         'assets/img/otp.png',
-                      height: 160,
+                      height: 266,
+                      width: 266,
                       fit: BoxFit.contain,
                       errorBuilder: (_, __, ___) => const Icon(Icons.image, size: 120, color: Colors.black26),
                     ),
@@ -238,38 +254,4 @@ class _OtpMethodSelector extends StatelessWidget {
       ),
     );
   }
-}
-/// ————————— موجەی خوارەوە —————————
-class _BottomWave extends StatelessWidget {
-  const _BottomWave();
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: _BottomWavePainter(),
-      size: const Size(double.infinity as double, 160),
-    );
-  }
-}
-
-class _BottomWavePainter extends CustomPainter {
-  static const primary = Color(0xFFFF5A36);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = primary;
-    final path = Path()
-      ..moveTo(0, size.height * 0.35)
-      ..quadraticBezierTo(
-          size.width * 0.25, size.height * 0.10, size.width * 0.5, size.height * 0.22)
-      ..quadraticBezierTo(
-          size.width * 0.80, size.height * 0.42, size.width, size.height * 0.20)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

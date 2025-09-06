@@ -22,14 +22,14 @@ class Singleglassscreen extends StatefulWidget {
 }
 
 class _GlassOrderPageState extends State<Singleglassscreen> {
-  final TextEditingController widthCtrl = TextEditingController(text: "235");
+  final TextEditingController widthCtrl  = TextEditingController(text: "235");
   final TextEditingController heightCtrl = TextEditingController(text: "235");
-  final TextEditingController descCtrl = TextEditingController();
+  final TextEditingController descCtrl   = TextEditingController();
 
-  String glassBrand = "Turkish";
-  String glassColor = "Gray";
+  String glassBrand     = "Turkish";
+  String glassColor     = "Gray";
   String glassThickness = "6 mm";
-  String glassType = "Clear";
+  String glassType      = "Clear";
 
   int quantity = 1;
 
@@ -45,18 +45,17 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  const SizedBox(height: 35),
+                  const SizedBox(height: 58),
                   Row(
                     children: [
                       const SizedBox(width: 20),
                       IconButton(
                         icon: const Icon(Icons.arrow_back,
-                            color: Color.fromARGB(255, 255, 255, 255)),
+                            color: Colors.white, size: 26),
                         onPressed: () => Navigator.pop(context),
                         style: ButtonStyle(
-                          
-                          backgroundColor: WidgetStateProperty.all(
-                              const Color(0xFFFF5A36)),
+                          backgroundColor:
+                              WidgetStateProperty.all(const Color(0xFFFF5A36)),
                           shape: WidgetStateProperty.all(const CircleBorder()),
                         ),
                       ),
@@ -64,26 +63,25 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                         child: Center(
                           child: Image.asset(
                             "assets/img/logo.png",
-                            height: 40,
+                            height: 60,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 88),
+                      const SizedBox(width: 98),
                     ],
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 40),
 
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          const SizedBox(height: 10),
-
-                          /// Width & Height
+                          // Width & Height
                           Row(
                             children: [
-                              Expanded(
+                              SizedBox(
+                                width: 166,
                                 child: _InputBox(
                                   label: "Width",
                                   prefix: "W",
@@ -91,7 +89,8 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              Expanded(
+                              SizedBox(
+                                width: 166,
                                 child: _InputBox(
                                   label: "Height",
                                   prefix: "H",
@@ -100,15 +99,15 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 25),
 
-                          /// Brand & Color
+                          // Brand & Color
                           Row(
                             children: [
-                              
-                              Expanded(
+                              SizedBox(
+                                width: 166,
                                 child: _DropdownBox(
-                                  height: 36,
+                                  height: 40,
                                   label: "Glass Brand",
                                   value: glassBrand,
                                   items: const ["Turkish", "German", "Italian"],
@@ -117,27 +116,29 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              Expanded(
-  child: _DropdownBox(
-    height: 36,
-    label: "Glass Color",
-    value: glassColor,
-    showColorSwatch: true,
-    items: const ["Gray", "Blue", "Green", "Brown"],
-    onChanged: (v) => setState(() => glassColor = v!),
-  ),
-),
-
+                              SizedBox(
+                                width: 166,
+                                child: _DropdownBox(
+                                  height: 40,
+                                  label: "Glass Color",
+                                  value: glassColor,
+                                  showColorSwatch: true,
+                                  items: const ["Gray", "Blue", "Green", "Brown"],
+                                  onChanged: (v) =>
+                                      setState(() => glassColor = v!),
+                                ),
+                              ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 25),
 
-                          /// Thickness & Type
+                          // Thickness & Type
                           Row(
                             children: [
-                              Expanded(
+                              SizedBox(
+                                width: 166,
                                 child: _DropdownBox(
-                                  height: 36,
+                                  height: 40,
                                   label: "Glass Thickness",
                                   value: glassThickness,
                                   items: const ["4 mm", "6 mm", "8 mm", "10 mm"],
@@ -146,9 +147,10 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                                 ),
                               ),
                               const SizedBox(width: 12),
-                              Expanded(
+                              SizedBox(
+                                width: 166,
                                 child: _DropdownBox(
-                                  height: 36,
+                                  height: 40,
                                   label: "Glass Type",
                                   value: glassType,
                                   items: const ["Clear", "Frosted", "Tinted"],
@@ -158,71 +160,72 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 25),
 
-                          /// Quantity
+                          // Quantity
                           Align(
-                            
                             alignment: Alignment.centerLeft,
                             child: Text(
                               "Quantity",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
-                                  ?.copyWith(fontSize: 12.5),
+                                  ?.copyWith(fontSize: 14),
                             ),
                           ),
                           const SizedBox(height: 6),
-                          const SizedBox(width: 40),
                           Row(
-  children: [
-    Container(
-      height: 43,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(13),
-        gradient: const LinearGradient(
-          colors: [Color(0xFFEA4828), Color.fromARGB(255, 61, 77, 248)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-      ),
-      padding: const EdgeInsets.all(1.6),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.remove),
-              onPressed: () {
-                if (quantity > 1) {
-                  setState(() => quantity--);
-                }
-              },
-            ),
-            Text("$quantity", style: const TextStyle(fontSize: 14)),
-            IconButton(
-              icon: const Icon(Icons.add, color: Color(0xFFFF5A36)),
-              onPressed: () => setState(() => quantity++),
-            ),
-          ],
-        ),
-      ),
-    ),
-    const Spacer(), // ⬅️ ئەمە شتەکانی تر ببە لای راست
-  ],
-),
+                            children: [
+                              Container(
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(13),
+                                  gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xFFEA4828),
+                                      Color.fromARGB(255, 61, 77, 248)
+                                    ],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.all(1.0),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.remove),
+                                        onPressed: () {
+                                          if (quantity > 1) {
+                                            setState(() => quantity--);
+                                          }
+                                        },
+                                      ),
+                                      Text("$quantity",
+                                          style: const TextStyle(fontSize: 14)),
+                                      IconButton(
+                                        icon: const Icon(Icons.add,
+                                            color: Color(0xFFFF5A36)),
+                                        onPressed: () =>
+                                            setState(() => quantity++),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              const Spacer(),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
 
-                          
-                        
-                          
-                          const SizedBox(height: 4),
-
-                          /// Descriptions
+                          // Descriptions
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
@@ -230,14 +233,15 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
-                                  ?.copyWith(fontSize: 12.5),
+                                  ?.copyWith(fontSize: 14),
                             ),
                           ),
-                          const SizedBox(height: 1),
+                          const SizedBox(height: 6),
                           _gradientBorder(
                             radius: 12,
-                            innerPadding: const EdgeInsets.fromLTRB(
-                                10, 6, 10, 6),
+                            stroke: 1.0,
+                            innerPadding:
+                                const EdgeInsets.fromLTRB(10, 6, 10, 6),
                             child: TextField(
                               controller: descCtrl,
                               maxLines: 4,
@@ -257,24 +261,24 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                     ),
                   ),
 
-                  /// Add to cart
+                  /// Add to cart  ⬅️ کەمێک هێنرا سەرەوە
                   Container(
                     width: double.infinity,
-                    margin: const EdgeInsets.only(top: 12),
+                    margin: const EdgeInsets.only(top: 12, bottom: 18),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFFF5A36),
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 11),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
                       onPressed: () {},
-                      icon: const Icon(Icons.add_shopping_cart),
+                      icon: const Icon(Icons.add),
                       label: const Text(
                         "Add to cart",
-                        style: TextStyle(fontSize: 16,height: 1,),
+                        style: TextStyle(fontSize: 16, height: 1),
                       ),
                     ),
                   ),
@@ -292,11 +296,12 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
 Widget _gradientBorder({
   required Widget child,
   double radius = 12,
+  double stroke = 1.0,
   EdgeInsetsGeometry innerPadding =
       const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
 }) {
   return Container(
-    padding: const EdgeInsets.all(1.6),
+    padding: EdgeInsets.all(stroke),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(radius),
       gradient: const LinearGradient(
@@ -337,45 +342,46 @@ class _InputBox extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium
-                ?.copyWith(fontSize: 12.5)),
+                ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
         const SizedBox(height: 6),
-        _gradientBorder(
-          radius: 12,
-          innerPadding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-          child: Row(
-            children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(31, 243, 243, 243),
-                  borderRadius: BorderRadius.circular(8),
+        SizedBox(
+          height: 40,
+          child: _gradientBorder(
+            radius: 12,
+            stroke: 1.0,
+            innerPadding:
+                const EdgeInsets.symmetric(horizontal: 6, vertical: 0),
+            child: Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(31, 243, 243, 243),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(prefix,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 12)),
                 ),
-                child: Text(
-                  prefix,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w700, fontSize: 12),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: TextField(
-                  controller: controller,
-                  keyboardType: TextInputType.number,
-                  style: const TextStyle(fontSize: 8),
-                  decoration: const InputDecoration(
-                    isDense: true,
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 8),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(fontSize: 14),
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 1),
-              const Text(
-                'cm',
-                style: TextStyle(fontSize: 12, color: Color.fromARGB(136, 0, 0, 0)),
-              ),
-            ],
+                const SizedBox(width: 4),
+                const Text('cm',
+                    style: TextStyle(fontSize: 12, color: Colors.black54)),
+              ],
+            ),
           ),
         ),
       ],
@@ -390,7 +396,7 @@ class _DropdownBox extends StatelessWidget {
   final List<String> items;
   final ValueChanged<String?> onChanged;
   final double height;
-  final bool showColorSwatch; // ⬅️ نوێ: تەنها بۆ Glass Color true بکە
+  final bool showColorSwatch;
 
   const _DropdownBox({
     required this.label,
@@ -398,7 +404,7 @@ class _DropdownBox extends StatelessWidget {
     required this.items,
     required this.onChanged,
     this.height = 40,
-    this.showColorSwatch = false, // ⬅️ بە بنەڕەت ناچالاکە
+    this.showColorSwatch = false,
   });
 
   Color _mapColor(String colorName) {
@@ -411,10 +417,6 @@ class _DropdownBox extends StatelessWidget {
         return Colors.green;
       case "brown":
         return Colors.brown;
-      case "red":
-        return Colors.red;
-      case "black":
-        return Colors.black;
       default:
         return Colors.transparent;
     }
@@ -422,11 +424,8 @@ class _DropdownBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // بنەمای item ـی هاوبەش (بە swatch یان بێ swatch)
     Widget _buildItem(String e) {
-      if (!showColorSwatch) {
-        return Text(e, style: const TextStyle(fontSize: 13));
-      }
+      if (!showColorSwatch) return Text(e, style: const TextStyle(fontSize: 13));
       return Row(
         children: [
           Container(
@@ -447,27 +446,25 @@ class _DropdownBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(fontSize: 12.5),
-        ),
+        Text(label,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
         const SizedBox(height: 6),
-        _gradientBorder(
-          radius: 12,
-          innerPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
-          child: SizedBox(
-            height: height,
+        SizedBox(
+          height: 40,
+          child: _gradientBorder(
+            radius: 12,
+            stroke: 1.0,
+            innerPadding:
+                const EdgeInsets.symmetric(horizontal: 8, vertical: 0),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
                 value: value,
                 isExpanded: true,
                 icon: const Icon(Icons.arrow_drop_down_rounded, size: 20),
                 style: const TextStyle(fontSize: 14, color: Colors.black87),
-
-                // ⬇️ بۆ ئەوەی کاتێک دابخراوە (selected state)ش swatch ببینرێت
                 selectedItemBuilder: showColorSwatch
                     ? (context) => items
                         .map((e) => Align(
@@ -476,12 +473,9 @@ class _DropdownBox extends StatelessWidget {
                             ))
                         .toList()
                     : null,
-
                 items: items
-                    .map((e) => DropdownMenuItem<String>(
-                          value: e,
-                          child: _buildItem(e),
-                        ))
+                    .map((e) =>
+                        DropdownMenuItem<String>(value: e, child: _buildItem(e)))
                     .toList(),
                 onChanged: onChanged,
               ),

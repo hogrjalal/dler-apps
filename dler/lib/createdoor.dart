@@ -1,117 +1,235 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
-/// هەمان ڕەنگەکان لە پڕۆژەی پێشوو
-class AppColors {
-  static const coralDark = Color(0xFFFF5A36);
-  static const coralSoft = Color(0xFFFFB59F);
-  static const card = Color(0xFFF7F1EF);
-  static const text = Colors.black87;
-}
-
-class Createdoorscreen extends StatefulWidget {
-  const Createdoorscreen({super.key});
+class GradientBanner extends StatelessWidget {
+  const GradientBanner({super.key});
 
   @override
-  State<Createdoorscreen> createState() => _BrandsPageState();
-}
-
-class _BrandsPageState extends State<Createdoorscreen> {
-  final _pageCtrl = PageController();
-  int _index = 0;
-
-  @override
-  void dispose() {
-    _pageCtrl.dispose();
-    super.dispose();
+  Widget build(BuildContext context) {
+    return Image.asset(
+      "assets/img/gradient_banner.png",
+      width: double.infinity,
+      height: 132,
+      fit: BoxFit.cover,
+    );
   }
+}
+
+class CreateDoorDetailScreen extends StatefulWidget {
+  const CreateDoorDetailScreen({super.key});
+
+  @override
+  State<CreateDoorDetailScreen> createState() => _CreateDoorDetailScreenState();
+}
+
+class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
+  final TextEditingController widthCtrl  = TextEditingController(text: "235");
+  final TextEditingController heightCtrl = TextEditingController(text: "235");
+  final TextEditingController descCtrl   = TextEditingController();
+
+  String aluminumColor = "Brown";
+  String glassType     = "Clear";
+  String aluminumType  = "Sliding";
+
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          const _HeaderWave(),
+          const GradientBanner(),
+
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+              padding: const EdgeInsets.all(16),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Back + Logo
+                  const SizedBox(height: 40),
                   Row(
                     children: [
-                      _BackBtn(onTap: () => Navigator.pop(context)),
-                      const SizedBox(width: 8),
+                      const SizedBox(width: 20),
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back,
+                            color: Colors.white, size: 26),
+                        onPressed: () => Navigator.pop(context),
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.all(const Color(0xFFFF5A36)),
+                          shape: WidgetStateProperty.all(const CircleBorder()),
+                        ),
+                      ),
                       Expanded(
                         child: Center(
                           child: Image.asset(
                             "assets/img/logo.png",
-                            height: 36,
-                            fit: BoxFit.contain,
+                            height: 50,
                           ),
                         ),
                       ),
-                      const SizedBox(width: 44), // balance
+                      const SizedBox(width: 88),
                     ],
                   ),
-                  const SizedBox(height: 10),
 
-                  // ===== Carousel =====
-                  AspectRatio(
-                    aspectRatio: 16 / 7.5,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: PageView(
-                        controller: _pageCtrl,
-                        onPageChanged: (i) => setState(() => _index = i),
-                        children: const [
-                          _HeroSlide(),
-                          _SolidSlide(color: Color(0xFFFF9F8A), title: "Alu Profiles", subtitle: "300+ SKUs"),
-                          _SolidSlide(color: Color(0xFF333A), title: "Custom Orders", subtitle: "Fast Delivery"),
+                  const SizedBox(height: 25),
+
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          /// Width & Height
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 166,
+                                child: _InputBox(
+                                  label: "Width",
+                                  prefix: "W",
+                                  controller: widthCtrl,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              SizedBox(
+                                width: 166,
+                                child: _InputBox(
+                                  label: "Height",
+                                  prefix: "H",
+                                  controller: heightCtrl,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+
+                          /// Aluminum Color + Quantity
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 166,
+                                child: _DropdownBox(
+                                  label: "Aluminum color",
+                                  value: aluminumColor,
+                                  showColorSwatch: true,
+                                  items: const ["Brown", "Black", "Gray", "White"],
+                                  onChanged: (v) =>
+                                      setState(() => aluminumColor = v!),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              SizedBox(
+                                width: 166,
+                                child: _QuantityBox(
+                                  value: quantity,
+                                  onChanged: (v) =>
+                                      setState(() => quantity = v),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+
+                          /// Glass Type + Upload Image
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 166,
+                                child: _DropdownBox(
+                                  label: "Glass type",
+                                  value: glassType,
+                                  items: const ["Clear", "Frosted", "Tinted"],
+                                  onChanged: (v) =>
+                                      setState(() => glassType = v!),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    // TODO: handle file picker
+                                  },
+                                  child: DottedBorderBox(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: const [
+                                        Icon(Icons.upload, color: Colors.red),
+                                        Text("Upload image",
+                                            style: TextStyle(fontSize: 12)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+
+                          /// Aluminum Type
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 166,
+                                child: _DropdownBox(
+                                  label: "Aluminum type",
+                                  value: aluminumType,
+                                  items: const ["Sliding", "Fixed", "Openable"],
+                                  onChanged: (v) =>
+                                      setState(() => aluminumType = v!),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 25),
+
+                          /// Descriptions
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text("Descriptions",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(fontSize: 14)),
+                          ),
+                          const SizedBox(height: 6),
+                          _gradientBorder(
+                            radius: 12,
+                            stroke: 1.0,
+                            innerPadding:
+                                const EdgeInsets.fromLTRB(10, 6, 10, 6),
+                            child: TextField(
+                              controller: descCtrl,
+                              maxLines: 4,
+                              maxLength: 500,
+                              style: const TextStyle(fontSize: 14),
+                              decoration: const InputDecoration(
+                                isDense: true,
+                                hintText: "Write here...",
+                                counterText: "",
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
                   ),
 
-                  const SizedBox(height: 8),
-                  // Dots indicator (٣ خاڵ)
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: List.generate(3, (i) {
-                      final active = i == _index;
-                      return AnimatedContainer(
-                        duration: const Duration(milliseconds: 250),
-                        margin: EdgeInsets.only(right: i == 2 ? 0 : 6),
-                        width: active ? 14 : 6,
-                        height: 6,
-                        decoration: BoxDecoration(
-                          color: active ? AppColors.coralDark : Colors.black12,
-                          borderRadius: BorderRadius.circular(999),
+                  /// Add to Cart Button
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 12, bottom: 12),
+                    child: ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFFFF5A36),
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                      );
-                    }),
-                  ),
-
-                  const SizedBox(height: 18),
-
-                  // ===== Cards =====
-                  _ImageCard(
-                    imagePath: "assets/img/tubes.jpg",
-                    label: "Tube&Corner",
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 14),
-                  _ImageCard(
-                    imagePath: "assets/img/accessories.jpg",
-                    label: "accessories aluminium",
-                    onTap: () {},
-                  ),
-                  const SizedBox(height: 14),
-                  _BrandCard(
-                    imagePath: "assets/img/brands_card.png", // panel with brand logos
-                    label: "Brands",
-                    onTap: () {},
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                      label: const Text("Add to cart",
+                          style: TextStyle(fontSize: 16, height: 1)),
+                    ),
                   ),
                 ],
               ),
@@ -123,290 +241,244 @@ class _BrandsPageState extends State<Createdoorscreen> {
   }
 }
 
-/// موجەی سەرەوە + گرادیەنت
-class _HeaderWave extends StatelessWidget {
-  const _HeaderWave();
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 170,
-      width: double.infinity,
-      child: ClipPath(
-        clipper: _WaveClipper(),
-        child: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [AppColors.coralSoft, AppColors.coralDark],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-        ),
+/// Gradient border (reusable)
+Widget _gradientBorder({
+  required Widget child,
+  double radius = 12,
+  double stroke = 1.0,
+  EdgeInsetsGeometry innerPadding =
+      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+}) {
+  return Container(
+    padding: EdgeInsets.all(stroke),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(radius),
+      gradient: const LinearGradient(
+        colors: [Color(0xFFEA4828), Color.fromARGB(255, 70, 70, 246)],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
       ),
-    );
-  }
-}
-
-class _WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final p = Path()..lineTo(0, size.height * 0.55);
-    p.quadraticBezierTo(size.width * 0.18, size.height * 0.40,
-        size.width * 0.35, size.height * 0.48);
-    p.quadraticBezierTo(size.width * 0.65, size.height * 0.62,
-        size.width, size.height * 0.42);
-    p.lineTo(size.width, 0);
-    p.close();
-    return p;
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) => false;
-}
-
-class _BackBtn extends StatelessWidget {
-  final VoidCallback onTap;
-  const _BackBtn({required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      customBorder: const CircleBorder(),
-      onTap: onTap,
-      child: Ink(
-        width: 36,
-        height: 36,
-        decoration: const BoxDecoration(
-          color: AppColors.coralDark,
-          shape: BoxShape.circle,
-          boxShadow: [
-            BoxShadow(
-              color: Color(0x33000000),
-              blurRadius: 8,
-              offset: Offset(0, 3),
-            ),
-          ],
-        ),
-        child: const Icon(Icons.arrow_back_ios_new_rounded,
-            color: Colors.white, size: 18),
+    ),
+    child: Container(
+      padding: innerPadding,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(radius - 0.5),
       ),
-    );
-  }
+      child: child,
+    ),
+  );
 }
 
-/// Slide with green gradient + window photo (like screenshot)
-class _HeroSlide extends StatelessWidget {
-  const _HeroSlide();
+/// InputBox
+class _InputBox extends StatelessWidget {
+  final String label;
+  final String prefix;
+  final TextEditingController controller;
+
+  const _InputBox({
+    required this.label,
+    required this.prefix,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // green gradient bg
-        Positioned.fill(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF0DA56A), Color(0xFF157B53)],
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-              ),
-            ),
-          ),
-        ),
-        // title text left
-        const Positioned(
-          left: 18,
-          top: 20,
-          child: SizedBox(
-            width: 160,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        Text(label,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+        const SizedBox(height: 6),
+        SizedBox(
+          height: 40,
+          child: _gradientBorder(
+            radius: 12,
+            child: Row(
               children: [
-                Text("Premium",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800)),
-                Text("Solutions",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 22,
-                        fontWeight: FontWeight.w800)),
-                SizedBox(height: 8),
-                Text("Strong & Durable",
-                    style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w600)),
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(31, 243, 243, 243),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Text(prefix,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w700, fontSize: 12)),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    style: const TextStyle(fontSize: 14),
+                    decoration: const InputDecoration(
+                      isDense: true,
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 4),
+                const Text('cm',
+                    style: TextStyle(fontSize: 12, color: Colors.black54)),
               ],
             ),
           ),
         ),
-        // product image right
-        Positioned(
-          right: 0,
-          top: 0,
-          bottom: 0,
-          child: Image.asset(
-            "assets/img/window_promo.png",
-            width: 160,
-            fit: BoxFit.cover,
-          ),
-        ),
-        // rounded corners on whole slide
-        Positioned.fill(
-          child: IgnorePointer(
-            child: DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-              ),
-            ),
-          ),
-        )
       ],
     );
   }
 }
 
-class _SolidSlide extends StatelessWidget {
-  final Color color;
-  final String title;
-  final String subtitle;
-  const _SolidSlide(
-      {required this.color, required this.title, required this.subtitle});
+/// DropdownBox
+class _DropdownBox extends StatelessWidget {
+  final String label;
+  final String value;
+  final List<String> items;
+  final ValueChanged<String?> onChanged;
+  final bool showColorSwatch;
+
+  const _DropdownBox({
+    required this.label,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+    this.showColorSwatch = false,
+  });
+
+  Color _mapColor(String colorName) {
+    switch (colorName.toLowerCase()) {
+      case "gray":
+        return Colors.grey;
+      case "blue":
+        return Colors.blue;
+      case "green":
+        return Colors.green;
+      case "brown":
+        return Colors.brown;
+      case "black":
+        return Colors.black;
+      case "white":
+        return Colors.white;
+      default:
+        return Colors.transparent;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget _buildItem(String e) {
+      if (!showColorSwatch) {
+        return Text(e, style: const TextStyle(fontSize: 14));
+      }
+      return Row(
+        children: [
+          Container(
+            width: 16,
+            height: 16,
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: _mapColor(e),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black26),
+            ),
+          ),
+          Text(e, style: const TextStyle(fontSize: 14)),
+        ],
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(label,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
+        const SizedBox(height: 6),
+        SizedBox(
+          height: 40,
+          child: _gradientBorder(
+            radius: 12,
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton<String>(
+                value: value,
+                isExpanded: true,
+                icon: const Icon(Icons.arrow_drop_down_rounded, size: 20),
+                style: const TextStyle(fontSize: 14, color: Colors.black87),
+                selectedItemBuilder: showColorSwatch
+                    ? (context) => items
+                        .map((e) => Align(
+                              alignment: Alignment.centerLeft,
+                              child: _buildItem(e),
+                            ))
+                        .toList()
+                    : null,
+                items: items
+                    .map((e) =>
+                        DropdownMenuItem<String>(value: e, child: _buildItem(e)))
+                    .toList(),
+                onChanged: onChanged,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Quantity Box
+class _QuantityBox extends StatelessWidget {
+  final int value;
+  final ValueChanged<int> onChanged;
+
+  const _QuantityBox({
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _gradientBorder(
+      radius: 12,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.remove),
+            onPressed: () {
+              if (value > 1) onChanged(value - 1);
+            },
+          ),
+          Text("$value", style: const TextStyle(fontSize: 14)),
+          IconButton(
+            icon: const Icon(Icons.add, color: Color(0xFFFF5A36)),
+            onPressed: () => onChanged(value + 1),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Upload Image Box (Dotted)
+class DottedBorderBox extends StatelessWidget {
+  final Widget child;
+  const DottedBorderBox({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: color,
-      child: Center(
-        child: Text(
-          "$title\n$subtitle",
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700),
+      height: 90,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: Colors.red.shade200,
+          style: BorderStyle.solid,
+          width: 1,
         ),
       ),
-    );
-  }
-}
-
-/// Generic image card with pill label overlay (Tube & Accessories)
-class _ImageCard extends StatelessWidget {
-  final String imagePath;
-  final String label;
-  final VoidCallback onTap;
-  const _ImageCard(
-      {required this.imagePath, required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      elevation: 0,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Ink(
-          width: double.infinity,
-          height: 110,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x1F000000),
-                blurRadius: 12,
-                offset: Offset(0, 6),
-              )
-            ],
-          ),
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.35),
-                borderRadius: BorderRadius.circular(999),
-              ),
-              child: Text(
-                label,
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 14.5,
-                    fontWeight: FontWeight.w700),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// White card with logos + center pill that says "Brands"
-class _BrandCard extends StatelessWidget {
-  final String imagePath;
-  final String label;
-  final VoidCallback onTap;
-  const _BrandCard(
-      {required this.imagePath, required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
-        child: Ink(
-          width: double.infinity,
-          height: 120,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-            ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x1F000000),
-                blurRadius: 12,
-                offset: Offset(0, 6),
-              )
-            ],
-          ),
-          child: Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-              decoration: BoxDecoration(
-                color: const Color(0xFFE9E9E9),
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x33000000),
-                    blurRadius: 6,
-                    offset: Offset(0, 2),
-                  )
-                ],
-              ),
-              child: Text(
-                label,
-                style: const TextStyle(
-                  color: Colors.black87,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
+      child: Center(child: child),
     );
   }
 }

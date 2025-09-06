@@ -74,26 +74,28 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Stack(
           children: [
+
             const GradientBanner(), // موجەی سەرەوە
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
               child: Column(
+                
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   const SizedBox(height: 50),
+                   const SizedBox(height: 100),
                   // سەردێڕ
                  Text('choose Your',style: TextStyle(
                             color: const Color.fromARGB(255, 0, 0, 0),
                             fontWeight: FontWeight.w400,
-                            fontSize: 26,
+                            fontSize: 32,
                           ),),
                   Text('Preferred Language',
                       style: TextStyle(
                             color: primary,
                             fontWeight: FontWeight.w800,
-                            fontSize: 26,
+                            fontSize: 32,
                           ),),
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 48),
 
                   // لیستی زمانەکان
                   ..._langs.map((l) => Column(
@@ -103,11 +105,11 @@ class _HomePageState extends State<HomePage> {
                             selected: _selected == l.code,
                             onTap: () => setState(() => _selected = l.code),
                           ),
-                          const Divider(height: 1),
+                          const Divider(height: 6),
                         ],
                       )),
 
-                  const Spacer(),
+                  const SizedBox(height: 208),
 
                   // دوکمەی Done
                   SizedBox(
@@ -120,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                         minimumSize: const Size.fromHeight(52),
                         shape: const StadiumBorder(),
                         textStyle: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w700),
+                          fontSize: 25, fontWeight: FontWeight.w700),
                         elevation: 0,
                       ),
                       child: const Text('Done'),
@@ -166,8 +168,8 @@ class _LangTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(4),
               child: Image.network(
                 lang.flagUrl,
-                width: 36,
-                height: 24,
+                width: 58,
+                height: 38,
                 fit: BoxFit.cover,
                 loadingBuilder: (context, child, progress) {
                   if (progress == null) return child;
@@ -203,7 +205,7 @@ class _LangTile extends StatelessWidget {
               child: Text(
                 lang.label,
                 style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.w600),
+                  fontSize: 25, fontWeight: FontWeight.w400),
               ),
             ),
             AnimatedSwitcher(

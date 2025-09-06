@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-import 'salealuminum.dart';
 import 'createdoor.dart';
 import 'saleglass.dart';
+import 'app_shell.dart';
 
 void main() {
   runApp(const DlerApp());
@@ -31,10 +31,16 @@ class DlerApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const HomeScreen(),
+      // ⬅️ شێڵی سراسری کە ناڤباڕی جیاواز تێدایە
+      home: const AppShell(),
     );
   }
 }
+
+/// ئەمانە هەمان تعریفەکانی پێشترت — تەنیا دڵنیا بەرەوە هەمان شوێنن
+
+
+
 
 class GradientBanner extends StatelessWidget {
   const GradientBanner({super.key});
@@ -43,7 +49,7 @@ class GradientBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       "assets/img/gradient_banner.png",
-      width: double.infinity, // پر دەکات بە پەنی شاشە
+      width: double.infinity,
       height: 132,
       fit: BoxFit.cover,
     );
@@ -61,7 +67,7 @@ class AppColors {
   static const cardText = Colors.black87;
 
   static const navGradStart = Color(0xFFFFB49E);
-  static const navGradEnd   = Color(0xFFFFB49E);
+  static const navGradEnd = Color(0xFFFFB49E);
 }
 
 class HomeScreen extends StatefulWidget {
@@ -91,113 +97,39 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   const SizedBox(height: 24),
                   const _Logo(),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
 
-                  // ⬇️ بەتنی تەکست بەجای کارت
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.card,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(165, 0, 0, 0),
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: TextButton(
-                      onPressed: () {Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const Createdoorscreen()),
-        );}, // لەوانەیە دواتر ڕوتینگ زیاد بکەیت
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 66,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image.asset('assets/img/create.png'),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          const Text('Creating Doors&Windows'),
-                        ],
-                      ),
-                    ),
+                  // ⬇️ کارتە گەورەتر + وێنە/تایتڵ گەورەتر
+                  _HomeTile(
+                    title: 'Creating Doors&Windows',
+                    imagePath: 'assets/img/create.png',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const CreateDoorDetailScreen()),
+                      );
+                    },
                   ),
+                  const SizedBox(height: 12),
 
-                  const SizedBox(height: 10),
-
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.card,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(165, 0, 0, 0),
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: TextButton(
-                      onPressed: () {Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const Salealuminumscreen()),
-        );},
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 66,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image.asset('assets/img/alm.png'),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          const Text('Selling Aluminum'),
-                        ],
-                      ),
-                    ),
+                  _HomeTile(
+                    title: 'Selling Aluminum',
+                    imagePath: 'assets/img/alm.png',
+                    onPressed: () {
+                     
+                    },
                   ),
+                  const SizedBox(height: 12),
 
-                  const SizedBox(height: 10),
-
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.card,
-                      borderRadius: BorderRadius.circular(14),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromARGB(165, 0, 0, 0),
-                          blurRadius: 7,
-                          offset: Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: TextButton(
-                      onPressed: () {Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const saleglassscreen()),
-        );},
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            height: 66,
-                            child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image.asset('assets/img/glass.png'),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          const Text('Selling Glass'),
-                        ],
-                      ),
-                    ),
+                  _HomeTile(
+                    title: 'Selling Glass',
+                    imagePath: 'assets/img/glass.png',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const saleglassscreen()),
+                      );
+                    },
                   ),
                 ],
               ),
@@ -232,6 +164,68 @@ class _Logo extends StatelessWidget {
   }
 }
 
+/// —— کاستیەم کارت بۆ ماڵپەڕ ——
+/// گەورەترکراوە: وێنە=90px، تایتڵ=18px، گۆشە=16، شادۆ نەرموو
+class _HomeTile extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final VoidCallback onPressed;
+
+  const _HomeTile({
+    required this.title,
+    required this.imagePath,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.card,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromARGB(164, 0, 0, 0),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: TextButton(
+        onPressed: onPressed,
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 10),
+          foregroundColor: AppColors.cardText,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        ),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 90, // ⬅️ وێنە گەورەتر
+              child: FittedBox(
+                fit: BoxFit.contain,
+                child: Image.asset(imagePath),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 18, // ⬅️ ناو گەورەتر
+                fontWeight: FontWeight.w700,
+                color: AppColors.cardText,
+                height: 1.15,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 /* ======================= FOOTER (UNCHANGED) ======================= */
 
 class _BottomNavBar extends StatelessWidget {
@@ -246,9 +240,9 @@ class _BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const bubbleSize = 6.0;
-    const notchRadius = 38.0;
+    const notchRadius = 32.0;
     const notchdynamic = notchRadius * 0.60;
-    const hPad = 10.0;
+    const hPad = 20.0;
     const vPad = 8.0;
 
     final icons = <IconData>[
@@ -318,8 +312,8 @@ class _BottomNavBar extends StatelessWidget {
                   AnimatedPositioned(
                     duration: const Duration(milliseconds: 350),
                     curve: Curves.easeOutBack,
-                    left: cx - bubbleSize / 0.35,
-                    top: -bubbleSize * 0.10,
+                    left: cx - bubbleSize / 0.20,
+                    top: -bubbleSize * 5.3,
                     child: _FloatingBubble(
                       child: Icon(
                         icons[currentIndex],
@@ -416,8 +410,8 @@ class _FloatingBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 36,
-      height: 36,
+      width: 60,
+      height: 60,
       decoration: const BoxDecoration(
         color: Color.fromARGB(255, 255, 148, 124),
         shape: BoxShape.circle,

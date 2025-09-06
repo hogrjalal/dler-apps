@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui' show FontFeature;
 import 'package:flutter/material.dart';
 import 'new_password.dart';
+
 class OtpVerificationScreen extends StatefulWidget {
   final String via;        // 'WhatsApp' یان 'Email'
   final String maskedTo;   // بۆ نموونە: '+964 750 ...' یان 'r***@mail.com'
@@ -46,7 +47,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     setState(() => _seconds = 59);
     _tick = Timer.periodic(const Duration(seconds: 1), (t) {
       if (_seconds == 0) {
-        setState(() {}); // بۆ نوێکردنەوەی ڕەنگی دوکمە لە 0
+        setState(() {}); 
         t.cancel();
       } else {
         setState(() => _seconds--);
@@ -55,7 +56,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void _onChanged(int i, String v) {
-    // تەنیا ژمارە ڕێگەبدە
     if (v.isNotEmpty && !RegExp(r'^\d$').hasMatch(v)) {
       _ctls[i].text = '';
       return;
@@ -71,14 +71,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     setState(() {});
   }
 
- void _verify() {
-  if (!_isFilled) return;
-  // TODO: verify with server
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (_) => const NewPasswordScreen()),
-  );
-}
+  void _verify() {
+    if (!_isFilled) return;
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const NewPasswordScreen()),
+    );
+  }
 
   void _resend() {
     for (final c in _ctls) c.clear();
@@ -100,13 +99,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
           child: Column(
             children: [
-              const SizedBox(width: 18),
+              
               // هێڵی سەرەوە: بازنەی بچووک + لوگۆ
               Row(
                 children: [
-                  
+                  const SizedBox(height: 48),
                   Container(
-                    
                     width: 34,
                     height: 34,
                     decoration: const BoxDecoration(
@@ -134,9 +132,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
               const SizedBox(height: 14),
 
-              // کارتەی گرادیەنت
-              Expanded(
+              // 🟧 کارت گرادیەنت بە قەبارەی 366 × 617
+              Center(
                 child: Container(
+                  width: 366,
+                  height: 617,
                   padding: const EdgeInsets.fromLTRB(18, 22, 18, 22),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(26),
@@ -226,7 +226,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                           ? const Color.fromARGB(255, 1, 1, 1)
                                           : Colors.black38,
                                       fontWeight: FontWeight.w500,
-                                     
                                     ),
                                   ),
                                 ),
@@ -238,32 +237,29 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
 
                       const SizedBox(height: 18),
 
-                      // دوکمەی Verify — ڕەنگی تایبەت لە 0:00
+                      // دوکمەی Verify
                       Center(
                         child: SizedBox(
                           width: 220,
                           child: ElevatedButton(
                             onPressed: _isFilled ? _verify : null,
                             style: ButtonStyle(
-                              // Background
                               backgroundColor:
                                   MaterialStateProperty.resolveWith<Color>((states) {
-                                if (_seconds == 0) return Colors.white; // ⬅️ کات تەواو بوو
+                                if (_seconds == 0) return Colors.white;
                                 if (states.contains(MaterialState.disabled)) {
                                   return const Color(0xFFE0E0E0);
                                 }
                                 return primary;
                               }),
-                              // Foreground (text/icon)
                               foregroundColor:
                                   MaterialStateProperty.resolveWith<Color>((states) {
-                                if (_seconds == 0) return primary; // ⬅️ کات تەواو بوو
+                                if (_seconds == 0) return primary;
                                 if (states.contains(MaterialState.disabled)) {
                                   return const Color(0xFF999999);
                                 }
                                 return Colors.white;
                               }),
-                              // Border only when white bg
                               side: MaterialStateProperty.resolveWith<BorderSide?>((states) {
                                 if (_seconds == 0) {
                                   return const BorderSide(color: primary, width: 1.6);
@@ -283,7 +279,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         ),
                       ),
 
-                      const Spacer(),
+                     
                     ],
                   ),
                 ),
@@ -295,7 +291,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  // ————— خانەی تاقەی OTP —————
+  // خانەی تاقەی OTP
   Widget _otpBox(int i) {
     return SizedBox(
       width: 42,
