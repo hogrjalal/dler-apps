@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
+
 import 'createdoor.dart';
 import 'saleglass.dart';
 import 'app_shell.dart';
-
+import 'sell_almnium.dart';
 void main() {
   runApp(const DlerApp());
 }
@@ -116,7 +116,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: 'Selling Aluminum',
                     imagePath: 'assets/img/alm.png',
                     onPressed: () {
-                     
+                         Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const SellAlmnium()),
+                      );
                     },
                   ),
                   const SizedBox(height: 12),
