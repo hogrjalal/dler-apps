@@ -199,7 +199,7 @@ class CategoryCard extends StatelessWidget {
                 label,
                 style: const TextStyle(
                   fontSize: 17,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                   color: Colors.black87,
                 ),
               ),

@@ -7,6 +7,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class GradientBanner extends StatelessWidget {
   const GradientBanner({super.key});
 
@@ -14,15 +15,14 @@ class GradientBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       "assets/img/gradient_banner.png",
-      width: double.infinity, // ⬅️ پر دەکات بە پەنی شاشە
+      width: double.infinity,
       height: 132,
-      fit: BoxFit.cover,      // ⬅️ بە شێوەی cover بگوازێت
+      fit: BoxFit.cover,
     );
   }
 }
 
-
-/// پەیجی هەڵبژاردنی زمان (هاوشێوەی وێنەی تۆ)
+/// پەیجی هەڵبژاردنی زمان
 class _HomePageState extends State<HomePage> {
   // en, ar, ku, tr
   String _selected = 'en';
@@ -43,7 +43,6 @@ class _HomePageState extends State<HomePage> {
     _Lang(
       code: 'ku',
       label: 'Kurdish',
-      // PNG بە هۆکاری ئەوەی پاکێج پێویست نەبێت
       flagUrl:
           'https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Flag_of_Kurdistan.svg/640px-Flag_of_Kurdistan.svg.png',
       dir: TextDirection.rtl,
@@ -74,30 +73,35 @@ class _HomePageState extends State<HomePage> {
       body: SafeArea(
         child: Stack(
           children: [
-
             const GradientBanner(), // موجەی سەرەوە
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 24, 20, 16),
               child: Column(
-                
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                   const SizedBox(height: 100),
+                  const SizedBox(height: 100),
+
                   // سەردێڕ
-                 Text('choose Your',style: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 32,
-                          ),),
-                  Text('Preferred Language',
-                      style: TextStyle(
-                            color: primary,
-                            fontWeight: FontWeight.w800,
-                            fontSize: 32,
-                          ),),
+                  const Text(
+                    'choose Your',
+                    style: TextStyle(
+                      color: Color.fromARGB(255, 0, 0, 0),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 32,
+                    ),
+                  ),
+                  const Text(
+                    'Preferred Language',
+                    style: TextStyle(
+                      color: primary,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 32,
+                    ),
+                  ),
+
                   const SizedBox(height: 48),
 
-                  // لیستی زمانەکان
+                  // لیستی زمانەکان + بەرزی نێوانیان
                   ..._langs.map((l) => Column(
                         children: [
                           _LangTile(
@@ -105,11 +109,11 @@ class _HomePageState extends State<HomePage> {
                             selected: _selected == l.code,
                             onTap: () => setState(() => _selected = l.code),
                           ),
-                          const Divider(height: 6),
+                          const SizedBox(height: 50), // ← بەرزی زیادکرا
                         ],
                       )),
 
-                  const SizedBox(height: 208),
+                  const Spacer(), // ← بەجێی SizedBox(208) ئەوە بەکاردهێنم بۆ فاصلەی خوار
 
                   // دوکمەی Done
                   SizedBox(
@@ -122,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                         minimumSize: const Size.fromHeight(52),
                         shape: const StadiumBorder(),
                         textStyle: const TextStyle(
-                          fontSize: 25, fontWeight: FontWeight.w700),
+                            fontSize: 25, fontWeight: FontWeight.w700),
                         elevation: 0,
                       ),
                       child: const Text('Done'),
@@ -163,7 +167,7 @@ class _LangTile extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           children: [
-            // وێنەی ئاڵا لە ئۆنلاینەوە
+            // وێنەی ئاڵا
             ClipRRect(
               borderRadius: BorderRadius.circular(4),
               child: Image.network(
@@ -204,8 +208,8 @@ class _LangTile extends StatelessWidget {
             Expanded(
               child: Text(
                 lang.label,
-                style: const TextStyle(
-                  fontSize: 25, fontWeight: FontWeight.w400),
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.w400),
               ),
             ),
             AnimatedSwitcher(
@@ -236,7 +240,7 @@ class _Lang {
   });
 }
 
-/// موجەی سەرەوە (نارنجی)
+/// موجەی سەرەوە (نارنجی) ـ بەکارنەهاتوو ئەمجاگرە
 class _TopWave extends StatelessWidget {
   const _TopWave();
 
@@ -256,10 +260,10 @@ class _WavePainter extends CustomPainter {
     final paint = Paint()..color = const Color(0xFFFF5A36);
     final path = Path()
       ..lineTo(0, size.height * 0.45)
-      ..quadraticBezierTo(
-          size.width * 0.25, size.height * 0.20, size.width * 0.5, size.height * 0.32)
-      ..quadraticBezierTo(
-          size.width * 0.85, size.height * 0.48, size.width, size.height * 0.25)
+      ..quadraticBezierTo(size.width * 0.25, size.height * 0.20,
+          size.width * 0.5, size.height * 0.32)
+      ..quadraticBezierTo(size.width * 0.85, size.height * 0.48,
+          size.width, size.height * 0.25)
       ..lineTo(size.width, 0)
       ..close();
     canvas.drawPath(path, paint);

@@ -42,7 +42,7 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
 
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(23),
               child: Column(
                 children: [
                   const SizedBox(height: 58),
@@ -76,7 +76,9 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
+                        
                         children: [
+                          
                           // Width & Height
                           Row(
                             children: [
@@ -160,69 +162,100 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 25),
+                          const SizedBox(height: 15),
 
                           // Quantity
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              "Quantity",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontSize: 14),
-                            ),
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
-                            children: [
-                              Container(
-                                height: 40,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(13),
-                                  gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xFFEA4828),
-                                      Color.fromARGB(255, 61, 77, 248)
-                                    ],
-                                    begin: Alignment.centerLeft,
-                                    end: Alignment.centerRight,
-                                  ),
-                                ),
-                                padding: const EdgeInsets.all(1.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 8, vertical: 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.remove),
-                                        onPressed: () {
-                                          if (quantity > 1) {
-                                            setState(() => quantity--);
-                                          }
-                                        },
-                                      ),
-                                      Text("$quantity",
-                                          style: const TextStyle(fontSize: 14)),
-                                      IconButton(
-                                        icon: const Icon(Icons.add,
-                                            color: Color(0xFFFF5A36)),
-                                        onPressed: () =>
-                                            setState(() => quantity++),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
+                         // Quantity Label
+Align(
+  alignment: Alignment.centerLeft,
+  child: Text(
+    "Quantity",
+    style: Theme.of(context)
+        .textTheme
+        .bodyMedium
+        ?.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+  ),
+),
+const SizedBox(height: 6),
+
+// Box Row (Quantity Box + Upload Box)
+Row(
+  crossAxisAlignment: CrossAxisAlignment.start,
+  children: [
+    const SizedBox(height: 30),
+
+    // بۆکسی کوانتیتی
+    Container(
+      height: 40,
+      width: 166,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(13),
+        gradient: const LinearGradient(
+          colors: [Color(0xFFEA4828), Color.fromARGB(255, 61, 77, 248)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+      ),
+      padding: const EdgeInsets.all(1.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove),
+              onPressed: () {
+                if (quantity > 1) setState(() => quantity--);
+              },
+            ),
+            Text("$quantity", style: const TextStyle(fontSize: 14)),
+            IconButton(
+              icon: const Icon(Icons.add, color: Color(0xFFFF5A36)),
+              onPressed: () => setState(() => quantity++),
+            ),
+          ],
+        ),
+      ),
+    ),
+
+    const SizedBox(width: 12),
+
+    // بۆکسی Upload تەنیشتی
+    Expanded(
+      child: CustomPaint(
+        painter: _DashedGradientBorderPainter(),
+        child: SizedBox(
+          height: 100,
+          
+          child: InkWell(
+            onTap: () {
+              // TODO: image picker logic
+            },
+            child: Center(
+              child: Column(
+                
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.upload, color: Colors.red, size: 32),
+                  SizedBox(height: 6),
+                  Text(
+                    "Upload image",
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+),
+
                           const SizedBox(height: 25),
 
                           // Descriptions
@@ -263,7 +296,8 @@ class _GlassOrderPageState extends State<Singleglassscreen> {
 
                   /// Add to cart  ⬅️ کەمێک هێنرا سەرەوە
                   Container(
-                    width: double.infinity,
+                    width: 345,
+                    height: 53,
                     margin: const EdgeInsets.only(top: 12, bottom: 18),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
@@ -343,7 +377,7 @@ class _InputBox extends StatelessWidget {
                 .textTheme
                 .bodyMedium
                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
-        const SizedBox(height: 6),
+        const SizedBox(height: 3),
         SizedBox(
           height: 40,
           child: _gradientBorder(
@@ -451,7 +485,7 @@ class _DropdownBox extends StatelessWidget {
                 .textTheme
                 .bodyMedium
                 ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400)),
-        const SizedBox(height: 6),
+        const SizedBox(height: 3),
         SizedBox(
           height: 40,
           child: _gradientBorder(
@@ -485,4 +519,41 @@ class _DropdownBox extends StatelessWidget {
       ],
     );
   }
+}
+class _DashedGradientBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    const dashWidth = 8.0;
+    const dashSpace = 8.0;
+
+    final rrect = RRect.fromRectAndRadius(
+      Rect.fromLTWH(0, 0, size.width, size.height),
+      const Radius.circular(12),
+    );
+
+    final paint = Paint()
+      ..shader = const LinearGradient(
+        colors: [Color(0xFFEA4828), Color.fromARGB(255, 94, 108, 255)],
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+      ).createShader(rrect.outerRect)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2;
+
+    final path = Path()..addRRect(rrect);
+    final dashed = Path();
+
+    for (final metric in path.computeMetrics()) {
+      double dist = 0;
+      while (dist < metric.length) {
+        final next = dist + dashWidth;
+        dashed.addPath(metric.extractPath(dist, next), Offset.zero);
+        dist = next + dashSpace;
+      }
+    }
+    canvas.drawPath(dashed, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

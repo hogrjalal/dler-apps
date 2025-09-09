@@ -4,6 +4,7 @@ import 'forgotpassword.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'home.dart';
 
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
   @override
@@ -56,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               // لۆگۆ لەسەرەوە
               Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 20),
+                padding: const EdgeInsets.only(top: 35, bottom: 20),
                 child: Image.asset(
                   'assets/img/logo.png', // لۆگۆی خۆت
                   height: 52,
@@ -64,12 +65,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   errorBuilder: (_, __, ___) => const SizedBox(height: 52),
                 ),
               ),
-
+ const SizedBox(height: 27),
               // کارتەی گرادیەنت
               Container(
+                width: 366,   // ⬅️ پانی نوێ
+  height: 617, 
                 padding: const EdgeInsets.fromLTRB(18, 22, 18, 18),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(26),
+                  borderRadius: BorderRadius.circular(30),
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -88,12 +91,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     const Text(
                       'Login',
                       style: TextStyle(
-                        fontSize: 26,
+                        fontSize: 28,
                         fontWeight: FontWeight.w800,
                         color: Colors.black87,
                       ),
                     ),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 30),
 
                     // Email (ئایکۆن لە راست، ڕەنگی پرایمەری)
                     _InputField(
@@ -102,7 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.emailAddress,
                       suffix: const Icon(Icons.person_outline, color: primary, size: 22),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 30),
 
                     // Password (focus: lock→eye ، toggle: eye/eye_off)
                     _InputField(
@@ -152,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Forgot password ?',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.blueAccent,
+                                color: Color.fromARGB(255, 0, 42, 114),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -185,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               'Forgot password ?',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Color.fromARGB(255, 50, 124, 252),
+                                color: Color.fromARGB(255, 0, 37, 101),
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
@@ -194,7 +197,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 75),
 
                     // دوکمەی Login
                     SizedBox(
@@ -219,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 40),
 
                     // هێڵەکانی "Or login in with"
                     Row(
@@ -235,14 +238,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         Expanded(child: Divider(color: Colors.black26, thickness: .8)),
                       ],
                     ),
-                    const SizedBox(height: 14),
+                    const SizedBox(height: 40),
 
                     // سۆشیال بەتنەکان: transparent + black border + color logos
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         _SocialNet(
-                          url: 'https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg',
+                          url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/2048px-Google_%22G%22_logo.svg.png',
                           tooltip: 'Google',
                         ),
                         SizedBox(width: 12),
@@ -258,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
 
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 6),
 
                     // لینکى تۆمارکردن
                     Row(

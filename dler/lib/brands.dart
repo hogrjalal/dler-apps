@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'search_products.dart';
 
 void main() => runApp(const brands());
 
@@ -226,7 +227,13 @@ class _PromoImageSlide extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap ?? () {},
+            onTap: onTap ?? (){
+               Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const BrandProductsScreen()),
+               );
+
+            },
             child: Ink.image(
               image: AssetImage(image),
               fit: BoxFit.cover,              // ⬅️ وێنەکە تەواو کارت دەگرێت

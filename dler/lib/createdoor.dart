@@ -80,7 +80,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
 
           SafeArea(
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(23),
               child: Column(
                 children: [
                   const SizedBox(height: 60),
@@ -133,6 +133,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                                 width: 166,
                                 child: _DropdownBox(
                                   label: "Aluminum color",
+                                  
                                   value: aluminumColor,
                                   showColorSwatch: true,
                                   items: const ["Brown", "Black", "Gray", "White"],
@@ -143,7 +144,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text("Quantity", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
+                                  const Text("Quantity", style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400)),
                                   const SizedBox(height: 6),
                                   SizedBox(
                                     width: 166,
@@ -158,7 +159,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                             ],
                           ),
 
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 25),
 
                           // 👉 Combined row: Glass type + Aluminum type (left, stacked)  |  Upload (right)
                           Row(
@@ -177,7 +178,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                                       onChanged: (v) => setState(() => glassType = v!),
                                     ),
                                   ),
-                                  const SizedBox(height: 12),
+                                  const SizedBox(height: 25),
                                   SizedBox(
                                     width: 166,
                                     child: _DropdownBox(
@@ -185,22 +186,27 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                                       value: aluminumType,
                                       items: const ["Sliding", "Fixed", "Openable"],
                                       onChanged: (v) => setState(() => aluminumType = v!),
+                                      
                                     ),
                                   ),
                                 ],
                               ),
 
                               const SizedBox(width: 12),
+                              
 
                               // right: upload box aligned to combined height (40 + 12 + 40 = 92)
                               Expanded(
+                                
                                 child: Padding(
+                                  
                                   // padding on the whole box (not its inner content)
-                                  padding: const EdgeInsets.only(top: 28, bottom: 28),
+                                  padding: const EdgeInsets.only(top: 30, bottom: 0),
                                   child: CustomPaint(
                                     painter: _DashedGradientBorderPainter(),
                                     child: SizedBox(
-                                      height: 115,
+                                      height: 125,
+                                      
                                       child: Center(
                                         child: Column(
                                           mainAxisAlignment: MainAxisAlignment.center,
@@ -218,7 +224,7 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                             ],
                           ),
 
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 25),
 
                           // Descriptions
                           Align(
@@ -248,23 +254,48 @@ class _CreateDoorDetailScreenState extends State<CreateDoorDetailScreen> {
                       ),
                     ),
                   ),
-
-                  // Add to Cart
+// Add to Cart
                   Container(
                     width: double.infinity,
                     margin: const EdgeInsets.only(top: 12, bottom: 12),
                     child: ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFFFF5A36),
-                        foregroundColor: Colors.white,
+                        foregroundColor: const Color.fromARGB(255, 255, 255, 255),
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                       ),
                       onPressed: () {},
                       icon: const Icon(Icons.add),
-                      label: const Text("Add to cart", style: TextStyle(fontSize: 16, height: 1)),
+                      label: const Text("Add to cart", style: TextStyle(fontSize: 20, height: 1)),
                     ),
                   ),
+                 // contact team member
+Container(
+  width: double.infinity,
+  margin: const EdgeInsets.only(top: 6, bottom: 12),
+  child: ElevatedButton.icon(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      foregroundColor: const Color.fromARGB(255, 255, 81, 0),
+      padding: const EdgeInsets.symmetric(vertical: 14),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+        side: const BorderSide(              // ⬅️ بۆردەری primary
+          color: Color(0xFFFF5A36),          // ڕەنگی پرایمەری
+          width: 1,                          // باریکی بۆردەر
+        ),
+      ),
+    ),
+    onPressed: () {},
+    
+    label: const Text(
+      "Contact Team Member",
+      style: TextStyle(fontSize: 20, height: 1,fontWeight: FontWeight.w800),
+    ),
+  ),
+),
+
                 ],
               ),
             ),
@@ -439,9 +470,17 @@ class _QuantityBox extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(icon: const Icon(Icons.remove), onPressed: () { if (value > 1) onChanged(value - 1); }),
+          IconButton(padding: const EdgeInsets.only(bottom: 2), // ⬅️ بەرزکردنی ناوەڕاست
+            icon: const Icon(Icons.remove), onPressed: () { if (value > 1) onChanged(value - 1); }),
           Text("$value", style: const TextStyle(fontSize: 14)),
-          IconButton(icon: const Icon(Icons.add, color: Color(0xFFFF5A36)), onPressed: () => onChanged(value + 1)),
+          IconButton(
+  padding: const EdgeInsets.only(bottom: 2), // ⬅️ بەرزکردنی ناوەڕاست
+  icon: const Icon(
+    Icons.add,
+    color: Color(0xFFFF5A36),
+  ),
+  onPressed: () => onChanged(value + 1),
+),
         ],
       ),
     );

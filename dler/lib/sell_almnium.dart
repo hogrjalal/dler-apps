@@ -156,16 +156,18 @@ Padding(
                     label: 'accessories\naluminium',
                     width: 200,
                     height: 100,
-                    onTap: () {},
+                    onTap: () {
+                              
+                    },
                   ),
                   const SizedBox(height: 40),
                   _HomeImageCard(
                     image: 'assets/img/brand.png',
-                    label: 'Brands',
+                    label: 'brands',
                     width: 200,
                     height: 100,
                     onTap: () {
-                        Navigator.push(
+                       Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const BrandssScreen()),
         );
@@ -439,15 +441,15 @@ class _HomeImageCard extends StatelessWidget {
     return Center(
       child: Material(
         color: Colors.transparent,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         child: InkWell(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           onTap: onTap,
           child: Ink(
             width: width,
             height: height,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
                   color: Color(0x23000000),
