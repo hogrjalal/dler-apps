@@ -74,7 +74,7 @@ flutter:
     - assets/img/double.png
     - assets/img/single.png
     - assets/img/vector.png
-    - assets/reklam/banner.png
+    - assets/reklam/b.png
     - assets/img/tube.png
     - assets/img/brand.png
     - assets/img/sellalm.png
@@ -86,8 +86,21 @@ flutter:
     - assets/brands/6.png
     - assets/products/image1.png
     - assets/products/image2.png
-    - assets/brands/Asistal.png
     - assets/img/search.png
+    - assets/reklam/b1.png
+    - assets/item/shape1.png
+    - assets/item/shape 2.png
+    - assets/item/image 29.png
+    - assets/item/image 30.png
+    - assets/item/image 31.png
+    - assets/item/image 32.png
+    - assets/item/image 33.png
+    - assets/item/image 34.png
+    - assets/item/image 35.png
+    - assets/item/image 36.png
+    - assets/item/image 41.png
+
+   
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

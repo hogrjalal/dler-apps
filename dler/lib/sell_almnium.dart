@@ -1,6 +1,8 @@
 import 'package:dler/home.dart';
 import 'package:flutter/material.dart';
 import 'brands.dart';
+import 'tube_corner.dart';
+import 'Accessories.dart';
 
 void main() => runApp(const SellAlmnium());
 
@@ -52,14 +54,14 @@ class _BrandsScreenState extends State<BrandsScreen> {
             
             child: Padding(
               
-              padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center, // ⬅️ ناوەراست
                 children: [
-                   const SizedBox(height: 40),
+                   const SizedBox(height: 55),
                   Row(
                     children: [
-                      const SizedBox(width: 46),
+                      const SizedBox(width: 45),
                       Container(
                         width: 40,
                         height: 40,
@@ -76,7 +78,7 @@ class _BrandsScreenState extends State<BrandsScreen> {
                         ),
                         child: IconButton(
                           padding: EdgeInsets.zero,
-                          icon: const Icon(Icons.arrow_back, color: Colors.white, size: 20),
+                          icon: const Icon(Icons.arrow_back, color: Colors.white, size: 25),
                           onPressed: () =>  Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => const HomeScreen()),
@@ -96,9 +98,9 @@ class _BrandsScreenState extends State<BrandsScreen> {
     controller: _pageCtl,
     onPageChanged: (i) => setState(() => _page = i),
     children: const [
-      _PromoImageSlide(image: 'assets/reklam/banner.png'),
-      _PromoImageSlide(image: 'assets/reklam/banner.png'),
-      _PromoImageSlide(image: 'assets/reklam/banner2.jpg'),
+      _PromoImageSlide(image: 'assets/reklam/b1.png'),
+      _PromoImageSlide(image: 'assets/reklam/b.png'),
+      _PromoImageSlide(image: 'assets/reklam/b1.png'),
     ],
   ),
 ),
@@ -145,9 +147,10 @@ Padding(
                     width: 200,
                     height: 100,
                     onTap: () {
-                      
-
-
+                       Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const TubeCornerPage()),
+        );
                     },
                   ),
                   const SizedBox(height: 40),
@@ -157,7 +160,10 @@ Padding(
                     width: 200,
                     height: 100,
                     onTap: () {
-                              
+                               Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const AccessoriesApp()),
+        );
                     },
                   ),
                   const SizedBox(height: 40),

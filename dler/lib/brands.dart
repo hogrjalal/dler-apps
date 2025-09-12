@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'search_products.dart';
+import 'search_products.dart'; // پەیجی بەرهەمەکان
 
-void main() => runApp(const brands());
+void main() => runApp(const BrandsApp());
 
-class brands extends StatelessWidget {
-  const brands({super.key});
+class BrandsApp extends StatelessWidget {
+  const BrandsApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +53,12 @@ class _BrandsScreenState extends State<BrandssScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 55),
 
                 // back + logo
                 Row(
                   children: [
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 45),
                     Container(
                       width: 40,
                       height: 40,
@@ -76,22 +76,21 @@ class _BrandsScreenState extends State<BrandssScreen> {
                       child: IconButton(
                         padding: EdgeInsets.zero,
                         icon: const Icon(Icons.arrow_back,
-                            color: Colors.white, size: 20),
+                            color: Colors.white, size: 25),
                         onPressed: () => Navigator.maybePop(context),
                       ),
                     ),
-                    const Spacer(),
+                    const SizedBox(width: 40),
                     Image.asset(
                       'assets/img/logo.png',
                       height: 48,
                       fit: BoxFit.contain,
                     ),
-                    const Spacer(),
                     const SizedBox(width: 40),
                   ],
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 40),
 
                 // Carousel بانەرەکان
                 SizedBox(
@@ -100,12 +99,13 @@ class _BrandsScreenState extends State<BrandssScreen> {
                     controller: _pageCtl,
                     onPageChanged: (i) => setState(() => _page = i),
                     children: const [
-                      _PromoImageSlide(image: 'assets/reklam/banner.png'),
-                      _PromoImageSlide(image: 'assets/reklam/banner2.jpg'),
-                      _PromoImageSlide(image: 'assets/reklam/banner3.jpg'),
+                      _PromoImageSlide(image: 'assets/reklam/b1.png'),
+                      _PromoImageSlide(image: 'assets/reklam/b.png'),
+                      _PromoImageSlide(image: 'assets/reklam/b1.png'),
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
 
                 // دۆتەکان
                 Padding(
@@ -133,7 +133,7 @@ class _BrandsScreenState extends State<BrandssScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 30),
+                const SizedBox(height: 60),
 
                 // Grid بۆ برندەکان
                 Expanded(
@@ -145,12 +145,13 @@ class _BrandsScreenState extends State<BrandssScreen> {
                       crossAxisSpacing: 16,
                       childAspectRatio: 1.9,
                       children: const [
-                        _BrandButton(image: 'assets/brands/1.png'),
-                        _BrandButton(image: 'assets/brands/2.png'),
-                        _BrandButton(image: 'assets/brands/3.png'),
+                        _BrandButton(
+                            image: 'assets/brands/2.png'),
+                        _BrandButton(
+                            image: 'assets/brands/1.png'),
                         _BrandButton(image: 'assets/brands/4.png'),
+                        _BrandButton(image: 'assets/brands/3.png'),
                         _BrandButton(image: 'assets/brands/6.png'),
-                       
                       ],
                     ),
                   ),
@@ -199,17 +200,18 @@ class _PromoImageSlide extends StatelessWidget {
   }
 }
 
-
- // =================== Brand Card (fills card with image) ===================
- class _BrandButton extends StatelessWidget {
+// =================== Brand Card ===================
+class _BrandButton extends StatelessWidget {
   final String image;
   final VoidCallback? onTap;
+  final String? name;
 
-  const _BrandButton({required this.image, this.onTap});
+  const _BrandButton({required this.image, this.onTap, this.name});
 
   @override
   Widget build(BuildContext context) {
     const radius = 16.0;
+    final brandName = name ?? _assetBaseName(image);
 
     return Container(
       decoration: BoxDecoration(
@@ -227,16 +229,19 @@ class _PromoImageSlide extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: onTap ?? (){
-               Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const BrandProductsScreen()),
-               );
+           onTap: onTap ?? () {
+Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => BrandProductsScreen.image(brandImagePath: image),
+  ),
+);
 
-            },
+},
+
             child: Ink.image(
               image: AssetImage(image),
-              fit: BoxFit.cover,              // ⬅️ وێنەکە تەواو کارت دەگرێت
+              fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
             ),
@@ -244,5 +249,12 @@ class _PromoImageSlide extends StatelessWidget {
         ),
       ),
     );
-    }
+  }
+}
+
+// ================= Helper to extract base name =================
+String _assetBaseName(String path) {
+  final file = path.split('/').last; // e.g. "4.png"
+  final dot = file.lastIndexOf('.');
+  return dot == -1 ? file : file.substring(0, dot); // e.g. "4"
 }
